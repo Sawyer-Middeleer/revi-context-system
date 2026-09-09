@@ -6,14 +6,21 @@ different owner: strategy should remain stable, experiments should change
 quickly, software should stay reusable, and customer records should reflect
 current activity.
 
-This component uses two main repositories. The **GTM workspace** says what Revi
-wants the component to do. The **GTM engine** checks and carries out those
-instructions.
+This component uses two main repositories. Think of the **GTM workspace** as
+the interface between Revi's operators and the machinery behind the GTM
+system. It is where a person says who Revi wants to reach, what counts as a
+good prospect, what message to test, and what the system is allowed to do.
+
+The **GTM engine** sits behind that interface. It reads those choices, checks
+them for conflicts or unsafe actions, and carries out approved work across
+Revi's sales tools. Operators change direction in the workspace. The engine
+turns that direction into consistent, repeatable work.
 
 ## The workspace
 
-The workspace is Revi's current go-to-market plan. Changes to targeting,
-scoring, campaigns, or outreach usually start here.
+The workspace is where Revi's operators set the direction and boundaries for
+go-to-market work. Changes to targeting, scoring, campaigns, or outreach
+usually start here.
 
 ```text
 revi-gtm-workspace/
@@ -81,6 +88,41 @@ revi-gtm/
 The separation lets Revi change its target market or campaign rules while the
 machinery stays stable. Provider connections contain service-specific details,
 and the business rules stay portable.
+
+## One choice from direction to action
+
+Suppose Revi wants to test outreach to operations leaders at growing B2B
+services companies.
+
+```text
+An operator sets the direction in the workspace
+
+Audience: growing B2B services companies
+Buyer role: operations leader
+Qualification: must meet the declared growth and service rules
+Exclusions: current clients, existing opportunities, and active holds
+Message: use the approved operations sequence
+Approval: show the final list before anyone is contacted
+
+                              |
+                              v
+
+The engine checks and carries out the work
+
+Find companies -> apply the qualification rules -> find the right people
+-> enrich approved contacts -> check exclusions again -> show a preview
+-> wait for approval -> load the campaign -> record what happened
+
+                              |
+                              v
+
+Attio holds the current relationship. Instantly delivers the campaign.
+Replies and results become evidence for the next decision.
+```
+
+The operator does not need to rewrite the software to change the audience,
+qualification rules, message, or limits. Those choices live in the workspace.
+The engine supplies the repeatable process that applies them.
 
 ## Connected GTM tools
 
