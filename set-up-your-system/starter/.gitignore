@@ -1,0 +1,11 @@
+# Secrets do not belong in the context system.
+.env
+.env.*
+*.key
+*.pem
+*.p12
+*.pfx
+
+# Local editor state.
+.DS_Store
+Thumbs.db

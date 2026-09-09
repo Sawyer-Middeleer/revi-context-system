@@ -1,0 +1,28 @@
+{
+  "threat_model_version": "1.0.0",
+  "last_updated": "2026-09-08T00:00:00Z",
+  "security_team_contacts": [],
+  "compliance_requirements": [],
+  "scan_frequency": "on_commit",
+  "severity_thresholds": {
+    "block_merge": [
+      "CRITICAL"
+    ],
+    "require_review": [
+      "HIGH",
+      "CRITICAL"
+    ],
+    "notify_security_team": [
+      "CRITICAL"
+    ]
+  },
+  "vulnerability_patterns": {
+    "enabled": [
+      "hardcoded_credentials",
+      "sensitive_data_exposure",
+      "unsafe_external_action",
+      "instruction_injection"
+    ],
+    "custom_patterns_path": null
+  }
+}
