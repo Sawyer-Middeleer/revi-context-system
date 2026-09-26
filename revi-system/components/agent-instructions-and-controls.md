@@ -22,23 +22,23 @@ Its scope is context governance: how AI receives, uses, and changes context.
 ```text
 sawyerm/
 ├── AGENTS.md                         vault-wide context and operating rules
-├── CLAUDE.md                         equivalent rules for Claude
 ├── revi-systems/
-│   ├── AGENTS.md                     rules for Revi company and client context
-│   └── CLAUDE.md                     equivalent rules for Claude
+│   └── AGENTS.md                     rules for Revi company and client context
 ├── .factory/
 │   ├── hooks.json                    automatic context loading and path guards
 │   ├── settings.json                 approved folders, tools, and access limits
+│   ├── droids/                       specialist AI helpers, such as researchers
 │   └── skills/
 │       └── <task>/SKILL.md            task process and quality standard
 └── <other repository>/
     ├── AGENTS.md                     rules for that repository
-    ├── CLAUDE.md                     equivalent rules for Claude
     └── .factory/skills/              task instructions specific to its context
 ```
 
-Equivalent files support the AI tools Revi uses. The substance stays aligned so
-the same source ownership, process, and access rules apply across them.
+Each folder has one instruction file, and each repository keeps its skills in
+one place. A single copy means there is no second version to fall out of step.
+Instructions refer to files by paths relative to the repository or the home
+folder, so the same guidance works on every operating system Revi uses.
 
 ## How guidance reaches a task
 
@@ -67,8 +67,12 @@ when the work calls for them.
   before a tool runs.
 - Settings grant cross-repository context deliberately and keep sensitive paths
   outside approved access.
+- Specialist helpers take on bounded research inside a larger session, so the
+  main session receives findings instead of raw search results.
 - Revi Ops schedules recurring context work and dispatches Ready maintenance
-  tasks from the shared board.
+  tasks from the shared board. Each scheduled routine lists the skills it relies
+  on, and Revi Ops checks that those skills exist and that runs load them. See
+  [Routine instructions and skills](revi-ops.md#routine-instructions-and-skills).
 
 Instruction files hold standing rules. Skills hold task methods. Hooks and
 settings control when context appears and where AI may act. Keeping these roles

@@ -59,6 +59,9 @@ For outside research, it preserves the source and writes an original summary.
 
 - **Starts with:** the draft and its source.
 - **AI:** opens a pull request showing exactly what would be added or changed.
+- **Automation:** for scheduled contributions, checks the pull request against
+  the routine's limits and returns anything outside them to draft with the
+  reason.
 - **A person checks:** accuracy, privacy, attribution, placement, and whether
   the material is useful enough to keep.
 - **The result:** an accepted change, a revision request, or a rejected draft.
@@ -92,6 +95,47 @@ across the rest of Revi's components.
    user-created.
 6. It opens a pull request.
 7. A person reviews and merges the contribution.
+
+## A concrete example: updates from recent work sessions
+
+Decisions and corrections often surface during everyday AI work sessions
+rather than in meetings. A daily routine collects them.
+
+1. A program cuts the previous day's work sessions into short exchanges, drops
+   tool output and AI reasoning, and removes anything that looks like a
+   credential.
+2. A decision model sorts each exchange by answering narrow yes-or-no and
+   pick-one questions (see
+   [Typed judgment](../components/revi-ops.md#typed-judgment)). Only a
+   decision a person made, a correction to a fact the vault already records, or
+   an insight about a named person, organization, project, or tool can go
+   forward. General lessons and summaries of work are left out. If nothing
+   qualifies, the AI never runs.
+3. The AI receives only the selected exchanges, never the full sessions. It
+   edits the note that holds the stale fact or the page for the entity involved.
+4. It opens one pull request for the day.
+5. A final check returns the pull request to draft if it strays outside the
+   routine's limits, for example by creating a concept page or containing
+   something that looks like a credential.
+6. A person reviews and merges the contribution.
+
+Corrections count for more than additions. A run that adds nothing is a correct
+run.
+
+## A concrete example: meeting preparation
+
+1. Each morning, a routine reads the day's calendar and lists the outside people
+   in each meeting.
+2. It checks the vault for an existing page for each person and, where the
+   company is the reason for the meeting, for that company.
+3. For anyone missing, it researches public sources and keeps a finding only
+   when both the name and the company match the invitation. A sparse page is
+   acceptable; a guessed one is not.
+4. It creates the missing pages, links existing mentions to them, and opens one
+   pull request.
+5. It posts a short summary to the operations channel with the meetings, new
+   pages, and the pull request.
+6. A person reviews and merges the contribution.
 
 ## Rules that apply across the loop
 

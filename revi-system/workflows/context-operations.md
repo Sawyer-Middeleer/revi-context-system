@@ -34,8 +34,9 @@ work completed and whether a follow-up task is needed.
 - **The result:** a reviewed recurring-workflow definition or a scoped task for
   the shared board.
 
-The automation register describes the work. The vault workflow executes
-meeting-note sync, and the GTM component executes GTM cycles.
+The automation register describes the work. Revi Ops runs shared routines such
+as meeting-note sync, which proposes vault changes for review, and the GTM
+component runs GTM cycles.
 
 ### 2. Register or queue it
 
@@ -56,9 +57,9 @@ a specific task on the board.
 ### 3. Run the work
 
 - **Starts with:** a scheduled time, an event, or a Ready board task.
-- **AI or automation:** loads the applicable instruction file and skill,
-  follows hook and setting boundaries, and prepares the assigned context
-  change.
+- **AI or automation:** loads the applicable instruction file and the skills
+  the routine declares, follows hook and setting boundaries, and prepares the
+  assigned context change.
 - **A person decides:** only when the process reaches a judgment or permission
   boundary.
 - **The result:** a proposed source update, a clear "nothing to do," a blocked
@@ -73,7 +74,9 @@ returns the resulting branch or pull request to Revi Ops.
 - **Starts with:** the completed or failed run.
 - **Automation:** appends one short outcome to the shared run log. It includes
   when the run started and ended, the outcome, what it produced, and where more
-  detail can be found. It then routes a proposed change to review, a blocked or
+  detail can be found. The outcome distinguishes a run with nothing to do, work
+  that did not land, a run stopped partway, and a crash. For AI work, the
+  record also points to the session and the skills it loaded. It then routes a proposed change to review, a blocked or
   failed run to its owner, and updates the board where a task exists.
 - **A person decides:** only where the result needs judgment or follow-up.
 - **The result:** durable evidence plus one clear destination: review,
@@ -95,7 +98,8 @@ returns the resulting branch or pull request to Revi Ops.
 - **Starts with:** the intended schedule in `rhythm.yaml`, the real scheduler,
   and the pattern of recent run outcomes.
 - **Automation:** looks for schedule disagreements, missing runs, repeated
-  failures, unusually long work, and declared pauses. A daily health routine
+  failures, unusually long work, declared pauses, and declared skills that are
+  missing or that runs have stopped loading. A daily health routine
   posts the summary to the operations channel.
 - **A person decides:** whether a failure needs investigation, a routine should
   stay paused, or the process itself should change.
@@ -120,6 +124,11 @@ returns the resulting branch or pull request to Revi Ops.
 - Deliberate pauses remain visible and name the condition for restarting.
 - Failure and missing execution are different problems.
 - Durable run history remains primary, with detailed logs supplying explanation.
+- A routine relies only on skills stored in its own repository and lists them
+  in the register.
+- When a routine needs a judgment call, a decision model answers narrow typed
+  questions and the program owns the thresholds and actions. See
+  [Typed judgment](../components/revi-ops.md#typed-judgment).
 - Agents can prepare changes, but people merge them.
 
 ## What still needs work
