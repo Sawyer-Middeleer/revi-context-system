@@ -1,6 +1,6 @@
 {
-  "scan_id": "scan-2026-09-09-001",
-  "scan_date": "2026-09-09T02:54:24Z",
+  "scan_id": "scan-2026-09-26-001",
+  "scan_date": "2026-09-26T21:09:19Z",
   "scan_type": "working",
   "commit_range": "HEAD..working-tree",
   "pr_number": null,

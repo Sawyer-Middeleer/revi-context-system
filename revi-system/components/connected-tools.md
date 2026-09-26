@@ -14,8 +14,9 @@ tool can play more than one role.
 | --- | --- | --- |
 | Knowledge base | Obsidian vault stored in GitHub | Shared company knowledge, client context, research, and decisions |
 | Specialist business tools | Attio, Instantly, QuickBooks Online, Mercury | Current sales, outreach, accounting, and banking records |
-| Unstructured streams | Granola | Meeting recordings, transcripts, and generated notes |
-| Instructions and controls | GitHub repositories | Reviewed instruction files, skills, hooks, settings, prompts, and declarations |
+| Unstructured streams | Granola, Google Calendar, AI work sessions, Slack | Meeting evidence, the day's schedule, decisions made during AI work, and operating updates |
+| Instructions and controls | GitHub repositories, Factory | Reviewed instruction files, skills, hooks, settings, prompts, and declarations, plus the AI runtime that loads them |
+| Decision models | TypeSafe | Typed answers to narrow judgment questions inside scheduled routines |
 | External data sources | Prospeo, FullEnrich | Company, person, and contact data retrieved when needed |
 
 ## What each tool owns
@@ -28,6 +29,10 @@ tool can play more than one role.
 | **QuickBooks Online** | Owns Revi's accounting books and customer invoices. | Approved finance routines read or update the books. Mercury supplies the bank feed. |
 | **Mercury** | Owns bank balances and transaction activity. | Its bank feed enters QuickBooks for bookkeeping and reconciliation. |
 | **Granola** | Holds meeting recordings, transcripts, and generated meeting notes. | A scheduled routine turns useful meeting evidence into a proposed vault change for review. |
+| **Google Calendar** | Owns the schedule of upcoming meetings and their attendees. | The meeting-preparation routine reads the day's events to find people who need a vault page. |
+| **Factory** | Runs AI sessions and keeps the record of each one. | People and scheduled routines work through it. Recent sessions feed the routine that proposes vault updates from work. |
+| **TypeSafe** | Supplies Jev, a decision model that returns a probability for a narrow typed question. | Routines send it reduced, credential-free data. The routine's program applies the thresholds and chooses the action. |
+| **Slack** | Carries short operating updates for people. | Routines post summaries and the daily health digest to the operations channel. Durable context still lands in its owning repository. |
 | **Prospeo** | Supplies outside company and person data for sourcing and enrichment. | The GTM engine calls it under workspace rules, then records accepted results and their source in Attio. |
 | **FullEnrich** | Supplies verified contact information for selected people. | The GTM engine uses it in the contact-enrichment sequence and records accepted results in Attio. |
 
@@ -35,6 +40,11 @@ tool can play more than one role.
 
 ```text
 Granola -> meeting-note routine -> vault change -> GitHub review
+
+Factory sessions -> TypeSafe triage -> vault change -> GitHub review
+
+Google Calendar -> meeting-prep routine -> new vault pages -> GitHub review
+                                        \-> summary in Slack
 
 Prospeo -> company and person evidence \
                                       -> GTM engine -> Attio -> Instantly

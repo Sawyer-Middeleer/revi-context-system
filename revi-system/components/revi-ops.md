@@ -17,14 +17,48 @@ adds, refreshes, governs, or reviews context.
 `rhythm.yaml` lists every standing workflow across Revi. Each entry names the
 owner, timing, trigger, runner, inputs, outputs, instructions, and destination.
 
-Revi Ops stores the prompt or program for shared context routines it owns.
-Examples include adding selected research to the vault, maintaining vault
-structure, and turning Granola meetings into proposed notes. A
+Revi Ops stores the instructions or program for shared context routines it
+owns. Examples include adding selected research to the vault, turning Granola
+meetings into proposed notes, preparing pages for the people in the day's
+meetings, and proposing vault updates from recent work sessions. A
 component-specific workflow points to the runner in its home repository.
 
 Keeping these definitions in reviewed files makes recurring work inspectable.
 A person can see what will run, what information it will use, and where its
 result will go before the next scheduled execution.
+
+## Routine instructions and skills
+
+Each shared routine keeps its instructions in one folder named after its entry
+in `rhythm.yaml`. The folder holds the main instructions for the AI, any smaller
+instructions used at specific steps, and, when the routine uses one, the typed
+questions it asks a decision model. Contracts for how a routine behaves, such as
+what every run must record, live in the code that enforces them rather than in
+separate documents that can drift.
+
+A **skill** is a reviewed, reusable method for a task, such as filing a note or
+linking to existing pages. A routine may rely only on skills stored in the
+repository it runs in, never on one person's machine. Its `rhythm.yaml` entry
+lists those skills. An automated check keeps that list equal to the skills the
+routine's instructions name, and the run history records which skills each run
+actually loaded. The health check flags a listed skill that runs have stopped
+loading, and an inventory shows which routines depend on each skill.
+
+This makes "which process does this automation follow?" something Revi can
+check, not assume.
+
+## Typed judgment
+
+Some routines need a judgment call before any AI writes anything, such as which
+work sessions contain a decision worth keeping. For these, Revi asks a decision
+model (TypeSafe's Jev) narrow questions about data that has already been
+reduced and stripped of credentials. Each question has a yes/no or pick-one
+answer, and the model returns a probability rather than prose.
+
+The program owns every threshold and every action. It decides what counts as
+a strong enough answer, what the AI may see, and what happens next. After the
+AI proposes a change, a final check returns anything outside the routine's
+limits to draft before a person reviews it.
 
 ## The shared task board
 
@@ -52,9 +86,12 @@ an owner and next action.
 
 ## Supporting history and health
 
-Each recurring workflow writes a short result to shared run history. Revi Ops
-uses that record to spot a failed run, a workflow that has gone quiet, or a
-schedule that differs from `rhythm.yaml`.
+Each recurring workflow writes a short result to shared run history, including
+runs that had nothing to do. The outcome separates an idle run, work that did
+not land, a run that was stopped partway, and a crash. When AI did the work, the
+record points to the AI session and the skills it loaded. Revi Ops uses that
+record to spot a failed run, a workflow that has gone quiet, a missing or unused
+skill, or a schedule that differs from `rhythm.yaml`.
 
 The history supports the workflow and task-board model. It confirms whether
 work ran and creates a trace for follow-up, while the workflow result or board
@@ -65,16 +102,22 @@ item remains the main operating surface.
 ```text
 revi-ops/
 ├── rhythm.yaml               list of recurring workflows across Revi
-├── prompts/                  definitions for shared AI-assisted workflows
-├── revi_ops/
-│   ├── run_routine.py        runs a shared recurring workflow
-│   ├── dispatch.py           runs Ready work from the shared task board
-│   ├── sweep_prs.py          puts open pull requests into review
-│   ├── drift_check.py        compares expected and observed automations
-│   ├── health.py             prepares the operating health digest
-│   └── lib/                  shared schedule, run-history, and health logic
-└── docs/
-    └── run-log.md            contract for recording every run
+├── instructions/
+│   └── <workflow>/           one folder per workflow in rhythm.yaml
+│       ├── prompt.md         main instructions for the AI
+│       ├── <step>.md         smaller instructions used at specific steps
+│       └── jev.json          typed questions for the decision model, when used
+├── ops/
+│   ├── core/
+│   │   ├── run_routine.py    runs a shared recurring workflow
+│   │   ├── dispatch.py       runs Ready work from the shared task board
+│   │   ├── sweep_prs.py      puts open pull requests into review
+│   │   ├── drift_check.py    compares expected and observed automations
+│   │   ├── health.py         prepares the operating health digest
+│   │   └── skills.py         shows which routines depend on each skill
+│   ├── routines/             code for workflows that need more than instructions
+│   └── lib/                  shared schedule, run-history, skill, and decision logic
+└── logs/runs/                append-only run history
 ```
 
 ## What operational context lives here
@@ -82,6 +125,7 @@ revi-ops/
 Revi Ops gives AI and people the context needed to operate the whole:
 
 - How a recurring context workflow runs and which component owns it
+- Which instructions and skills each recurring workflow relies on
 - Which tasks are in Backlog, Ready, In progress, In review, Done, or Blocked
 - Which person or AI executor owns the next action
 - Where each result should go

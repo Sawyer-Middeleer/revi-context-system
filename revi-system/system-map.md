@@ -66,10 +66,13 @@ The named tool connections are:
 
 ```text
 Granola -----------------> reviewed note -----------------> Knowledge vault
+Google Calendar ---------> meeting-prep pages -------------> Knowledge vault
+Factory sessions --------> TypeSafe triage ----------------> Knowledge vault
 Prospeo + FullEnrich ----> GTM engine ----> Attio <------> Instantly
 Mercury -----------------------------------------> QuickBooks Online
 
 GitHub holds the shared repositories, change history, issues, and reviews.
+Slack carries short operating updates.
 ```
 
 See [Connected tools](components/connected-tools.md) for what each tool owns.
@@ -100,8 +103,10 @@ Revi chooses a source based on the question being answered.
 | Which market segments and buyer roles does the GTM component use? | `declarations/icp/` in the GTM workspace |
 | Which campaign, score, or outreach rule is active? | `declarations/` in the GTM workspace |
 | How does the GTM component execute those rules? | The GTM engine |
-| Which standing instructions apply to an AI session? | The nearest `AGENTS.md` or `CLAUDE.md` file |
+| Which standing instructions apply to an AI session? | The nearest `AGENTS.md` file |
 | How should AI perform a repeatable task? | The relevant skill |
+| Which skills does a recurring workflow rely on? | Its entry in `rhythm.yaml` |
+| What steps does a shared recurring workflow follow? | Its instructions folder in Revi Ops |
 | Which context may AI access automatically? | Repository settings and hooks |
 | What recurring workflows should exist? | `rhythm.yaml` in Revi Ops |
 | What work is Ready, In progress, In review, or Blocked? | The shared GitHub task board |
@@ -111,6 +116,7 @@ Revi chooses a source based on the question being answered.
 | What is in Revi's accounting books? | QuickBooks Online |
 | What cleared through Revi's bank accounts? | Mercury |
 | What was said in a meeting? | Granola |
+| Who is Revi meeting today? | Google Calendar |
 
 When another component needs the same information in a different form, it
 receives a **working copy**. For example, stable positioning and case-study

@@ -47,8 +47,7 @@ sawyerm/
 │   ├── tools/
 │   ├── repos/
 │   ├── events/
-│   ├── concepts/
-│   └── frameworks/
+│   └── concepts/
 ├── _articles/                VAULT-WIDE WRITING
 ├── _daily-notes/             VAULT-WIDE WORKING NOTES
 ├── __inbox/                  TEMPORARY INTAKE
@@ -66,7 +65,7 @@ Private client folders and sensitive operating material are omitted from this pu
 | `revi-systems/clients/` | Context, decisions, and deliverables for each engagement |
 | `revi-systems/marketing-content/` and `_articles/` | Content plans, drafts, and published work |
 | `library/` | Research that may support Revi, a client, or future work |
-| `_hubs/` | Entry points for recurring people, organizations, tools, repositories, events, concepts, and frameworks |
+| `_hubs/` | Entry points for recurring people, organizations, tools, repositories, events, and concepts |
 | `_daily-notes/` and `__inbox/` | Temporary intake surfaces before durable material is filed |
 | `AGENTS.md` and skills | Instructions for how AI should navigate, judge, and change the vault; see [Agent instructions and controls](agent-instructions-and-controls.md) |
 
@@ -97,6 +96,11 @@ notes across the vault, while Attio owns its current sales record.
 ## How AI uses it
 
 An AI session starts with the vault instructions, follows links to the relevant company or client material, and reads only the context needed for the task. It can draft changes, but a reviewed repository change is the approval point for durable knowledge.
+
+Scheduled routines follow a narrower rule. They may add or update pages for
+people, organizations, projects, and decisions, but they may not create new
+concept pages. A reusable idea becomes a concept only when a person decides it
+should.
 
 Obsidian is the local reading and linking interface. GitHub holds the shared
 repository and pull-request history. Granola supplies meeting evidence that can
